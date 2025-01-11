@@ -16,7 +16,7 @@ services:
       - flask-net
 
   flask-app:
-    image: devopsdhruvjain/flask-app:v1
+    build: .
     container_name: flask-app
     environment:
       DB_USER: admin
