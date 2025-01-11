@@ -1,0 +1,39 @@
+services:
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: admin54321
+      MYSQL_DATABASE: flaskapp
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin54321
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./flaskapp.sql:/docker-entrypoint-initdb.d/flaskapp.sql
+    networks:
+      - flask-net
+
+  flask-app:
+    build: .
+    container_name: flask-app
+    environment:
+      DB_USER: admin
+      DB_PASSWORD: admin54321
+      DB_HOST: mysql
+      DB_NAME: flaskapp
+      DB_PORT: 3306
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mysql
+    networks:
+      - flask-net
+
+networks:
+  flask-net:
+    driver: bridge
+
+volumes:
+  mysql-data:
