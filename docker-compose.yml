@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  flask-app:
+    build: .
+    container_name: flask-app
+    environment:
+      DB_USER: admin
+      DB_PASSWORD: admin54321
+      DB_HOST: mydb.chsa2cyyk3pa.ap-south-1.rds.amazonaws.com
+      DB_PORT: 3306
+      DB_NAME: flaskapp
+    ports:
+      - "5000:5000"
